@@ -10,6 +10,7 @@
 		3A40066E18B53113005F43A6 /* ScreenSaver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A40066D18B53113005F43A6 /* ScreenSaver.framework */; };
 		3A40068318B53129005F43A6 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A40068218B53129005F43A6 /* WebKit.framework */; };
 		484202FA214417DC00DD962B /* Epoch Flip Clock.saver in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3A40066818B53112005F43A6 /* Epoch Flip Clock.saver */; };
+		484829AB214482EA00CD91C2 /* Epoch Flip Clock.saver in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3A40066818B53112005F43A6 /* Epoch Flip Clock.saver */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		77996CD91C94B825006B0FF7 /* EpochFlipClock.m in Sources */ = {isa = PBXBuildFile; fileRef = 77996CD81C94B825006B0FF7 /* EpochFlipClock.m */; };
 		77AD4D2D2041D6A9001100EC /* Webview in Resources */ = {isa = PBXBuildFile; fileRef = 77AD4D2C2041D6A9001100EC /* Webview */; };
 		77AD4D2F2041DBC6001100EC /* ConfigureSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 77AD4D2E2041DBC6001100EC /* ConfigureSheet.xib */; };
@@ -25,6 +26,16 @@
 			dstSubfolderSpec = 0;
 			files = (
 				484202FA214417DC00DD962B /* Epoch Flip Clock.saver in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		484829AA2144829F00CD91C2 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "/Users/maxmitch/Documents/repos/epoch-flip-clock-screensaver";
+			dstSubfolderSpec = 0;
+			files = (
+				484829AB214482EA00CD91C2 /* Epoch Flip Clock.saver in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -119,6 +130,7 @@
 				3A40066318B53112005F43A6 /* Frameworks */,
 				3A40066418B53112005F43A6 /* Headers */,
 				3A40066518B53112005F43A6 /* Resources */,
+				484829AA2144829F00CD91C2 /* CopyFiles */,
 				3A40066618B53112005F43A6 /* Rez */,
 				484202F9214417BA00DD962B /* CopyFiles */,
 			);
