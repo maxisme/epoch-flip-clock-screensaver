@@ -15,11 +15,16 @@ WebView* webView;
     
     [defaults registerDefaults:[NSDictionary dictionaryWithObjectsAndKeys:
         @"0", @"screenDisplayOption", // Default to show only on primary display
+        @"0", @"realTimeDisplayOption",
         nil]];
     
     // Webview
-    NSURL* indexHTMLDocumentURL = [NSURL URLWithString:[[[NSURL fileURLWithPath:[[NSBundle bundleForClass:self.class].resourcePath stringByAppendingString:@"/Webview/index.html"] isDirectory:NO] description] stringByAppendingFormat:@"?screensaver=1%@", self.isPreview ? @"&is_preview=1" : @""]];
-
+    NSString* file_url = [[NSBundle bundleForClass:self.class].resourcePath stringByAppendingString:@"/Webview/index.html"];
+    file_url = [[NSURL fileURLWithPath:file_url isDirectory:NO] description];
+    file_url = [file_url stringByAppendingFormat:@"?screensaver=1%@", self.isPreview ? @"&is_preview=1" : @""];
+    file_url = [file_url stringByAppendingFormat:@"&rt=%d", (int)[defaults integerForKey:@"realTimeDisplayOption"]];
+    NSURL* indexHTMLDocumentURL = [NSURL URLWithString:file_url];
+    
     webView = [[WebView alloc] initWithFrame:NSMakeRect(0, 0, frame.size.width, frame.size.height)];
     webView.drawsBackground = NO; // Avoids a "white flash" just before the index.html file has loaded
     [webView.mainFrame loadRequest:[NSURLRequest requestWithURL:indexHTMLDocumentURL cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData timeoutInterval:30.0]];
@@ -51,6 +56,7 @@ WebView* webView;
             [self addSubview:webView];
             break;
     }
+    
 
     return self;
 }
@@ -78,6 +84,7 @@ WebView* webView;
     }
     
     [screenDisplayOption selectItemAtIndex:[defaults integerForKey:@"screenDisplayOption"]];
+    [realTimeOption selectItemAtIndex:[defaults integerForKey:@"realTimeDisplayOption"]];
 
     return configSheet;
 }
@@ -95,6 +102,8 @@ WebView* webView;
     // Update our defaults
     [defaults setInteger:[screenDisplayOption indexOfSelectedItem]
                forKey:@"screenDisplayOption"];
+    [defaults setInteger:[realTimeOption indexOfSelectedItem]
+                  forKey:@"realTimeDisplayOption"];
     
     // Save the settings to disk
     [defaults synchronize];
@@ -117,7 +126,7 @@ WebView* webView;
 //- (void)mouseDown:(NSEvent *)theEvent {
 //    NSString * jsCallBack = [NSString stringWithFormat:@"toggleRealTime()"];
 //    [webView stringByEvaluatingJavaScriptFromString:jsCallBack];
-//    
+//
 //    [webView stringByEvaluatingJavaScriptFromString:@"toggleRealTime()"];
 //}
 - (void)mouseUp:(NSEvent *)theEvent {return;}
