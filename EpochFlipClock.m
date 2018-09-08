@@ -5,6 +5,7 @@
 
 static NSString * const epochFlipClockModule = @"com.epochflipclock";
 
+WebView* webView;
 - (id)initWithFrame:(NSRect)frame isPreview:(BOOL)isPreview {
     if (!(self = [super initWithFrame:frame isPreview:isPreview])) return nil;
     
@@ -19,9 +20,9 @@ static NSString * const epochFlipClockModule = @"com.epochflipclock";
     // Webview
     NSURL* indexHTMLDocumentURL = [NSURL URLWithString:[[[NSURL fileURLWithPath:[[NSBundle bundleForClass:self.class].resourcePath stringByAppendingString:@"/Webview/index.html"] isDirectory:NO] description] stringByAppendingFormat:@"?screensaver=1%@", self.isPreview ? @"&is_preview=1" : @""]];
 
-    WebView* webView = [[WebView alloc] initWithFrame:NSMakeRect(0, 0, frame.size.width, frame.size.height)];
+    webView = [[WebView alloc] initWithFrame:NSMakeRect(0, 0, frame.size.width, frame.size.height)];
     webView.drawsBackground = NO; // Avoids a "white flash" just before the index.html file has loaded
-    [webView.mainFrame loadRequest:[NSURLRequest requestWithURL:indexHTMLDocumentURL cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:30.0]];
+    [webView.mainFrame loadRequest:[NSURLRequest requestWithURL:indexHTMLDocumentURL cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData timeoutInterval:30.0]];
     
     // Show on screens based on preferences
     NSArray* screens = [NSScreen screens];
@@ -113,7 +114,12 @@ static NSString * const epochFlipClockModule = @"com.epochflipclock";
 - (NSView *)hitTest:(NSPoint)aPoint {return self;}
 //- (void)keyDown:(NSEvent *)theEvent {return;}
 //- (void)keyUp:(NSEvent *)theEvent {return;}
-- (void)mouseDown:(NSEvent *)theEvent {return;}
+//- (void)mouseDown:(NSEvent *)theEvent {
+//    NSString * jsCallBack = [NSString stringWithFormat:@"toggleRealTime()"];
+//    [webView stringByEvaluatingJavaScriptFromString:jsCallBack];
+//    
+//    [webView stringByEvaluatingJavaScriptFromString:@"toggleRealTime()"];
+//}
 - (void)mouseUp:(NSEvent *)theEvent {return;}
 - (void)mouseDragged:(NSEvent *)theEvent {return;}
 - (void)mouseEntered:(NSEvent *)theEvent {return;}
