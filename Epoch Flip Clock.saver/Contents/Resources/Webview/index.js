@@ -72,19 +72,9 @@ function updateClock() {
 function writeReadableDate() {
     var query = getQueryParams(document.location.search);
     if(query.rt == "0"){
-        var now = new Date();
-        var d = now.getDate();
-        var M = now.getMonth();
-        var y = now.getFullYear();
-        var h = now.getHours();
-        var m = now.getMinutes();
-        var s = now.getSeconds();
-        if (h < 10){ h = "0"+h; }
-        if (m < 10){ m = "0"+m; }
-        if (s < 10){ s = "0"+s; }
-        var str = d + "/" + M + "/" + y + " " + h + ":" + m + ":" + s;
-        
-        document.getElementById('realtime').innerHTML = str;
+        var today = new Date();
+        var dateString = today.format(query.dt);
+        document.getElementById('realtime').innerHTML = dateString;
     }
 }
 

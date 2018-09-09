@@ -16,6 +16,7 @@ WebView* webView;
     [defaults registerDefaults:[NSDictionary dictionaryWithObjectsAndKeys:
         @"0", @"screenDisplayOption", // Default to show only on primary display
         @"0", @"realTimeDisplayOption",
+        @"dd-mm-yy HH:MM:ss", @"dateFormatOption",
         nil]];
     
     // Webview
@@ -23,6 +24,7 @@ WebView* webView;
     file_url = [[NSURL fileURLWithPath:file_url isDirectory:NO] description];
     file_url = [file_url stringByAppendingFormat:@"?screensaver=1%@", self.isPreview ? @"&is_preview=1" : @""];
     file_url = [file_url stringByAppendingFormat:@"&rt=%d", (int)[defaults integerForKey:@"realTimeDisplayOption"]];
+    file_url = [file_url stringByAppendingFormat:@"&dt=%@", [[defaults objectForKey:@"dateFormatOption"] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]]];
     NSURL* indexHTMLDocumentURL = [NSURL URLWithString:file_url];
     
     webView = [[WebView alloc] initWithFrame:NSMakeRect(0, 0, frame.size.width, frame.size.height)];
@@ -85,6 +87,7 @@ WebView* webView;
     
     [screenDisplayOption selectItemAtIndex:[defaults integerForKey:@"screenDisplayOption"]];
     [realTimeOption selectItemAtIndex:[defaults integerForKey:@"realTimeDisplayOption"]];
+    [timeFormatOption setStringValue:[defaults objectForKey:@"dateFormatOption"]];
 
     return configSheet;
 }
@@ -104,6 +107,8 @@ WebView* webView;
                forKey:@"screenDisplayOption"];
     [defaults setInteger:[realTimeOption indexOfSelectedItem]
                   forKey:@"realTimeDisplayOption"];
+    [defaults setObject:[timeFormatOption stringValue]
+                  forKey:@"dateFormatOption"];
     
     // Save the settings to disk
     [defaults synchronize];
